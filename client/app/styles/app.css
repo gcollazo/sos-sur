@@ -12,3 +12,14 @@ html {
 .report {
   margin-bottom: 20px;
 }
+
+.need {
+  font-size: 12px;
+  text-transform: uppercase;
+  background-color: gray;
+  color: white;
+  display: inline-block;
+  padding: 2px 5px 0;
+  margin-bottom: 3px;
+  border-radius: 3px;
+}

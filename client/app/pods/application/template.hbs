@@ -1,12 +1,1 @@
-<div class="container">
-  <h1>sos-sur</h1>
-  {{#each model as |report|}}
-    <section class="report">
-      <div>{{report.name}}</div>
-      <div><a target="_blank" href="https://www.google.com/maps/place/{{report.location}}">{{report.address}}</a></div>
-      {{#each report.data as |meta|}}
-        <div>{{meta.key}}: {{meta.value}}</div>
-      {{/each}}
-    </section>
-  {{/each}}
-</div>
+{{outlet}}
