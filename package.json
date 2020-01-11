@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
+    "build": "cd client && yarn install && yarn run build --environment=production && rm -rf dist && mv dist ../public",
     "deploy": "git push heroku master"
   },
   "dependencies": {

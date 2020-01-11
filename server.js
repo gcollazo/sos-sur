@@ -6,7 +6,7 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const publicFolder = path.resolve(__dirname, "client", "dist");
+const publicFolder = path.resolve(__dirname, "public");
 let CACHE = {};
 
 function setCacheData(data) {
