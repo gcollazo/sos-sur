@@ -1,0 +1,18 @@
+[
+  {
+    "name": "9-1-1",
+    "phones": ["911"]
+  },
+  {
+    "name": "Policia de Puerto Rico",
+    "phones": ["(787) 343-2020", "(787) 793-1234"]
+  },
+  {
+    "name": "Bomberos de Puerto Rico",
+    "phones": ["(787) 343-2330"]
+  },
+  {
+    "name": "Agencia Estatal para el Manejo de Emergencias",
+    "phones": ["(787) 724-0100","(787) 724-0124","(787) 743-3138","(787) 831-5454","(787) 844-8272"]
+  }
+]

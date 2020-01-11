@@ -66,9 +66,34 @@ async function getBatchGeoData() {
   return cleanData;
 }
 
+async function  getHospitalData(){
+  let response = await fetch("https://data.pr.gov/resource/qrz3-v8t2.json");
+  let body = await response.json();
+  let placeFilters = ["Pueblo: Caguas"];
+
+  let hospitals;
+
+  if(placeFilters.length > 0){
+    hospitals = body.filter(hospital => placeFilters.includes(hospital.pueblo))
+  }else {
+    hospitals = body;
+  }
+
+
+  return hospitals;
+}
+
+
 app.use(cors());
 
+app.use(express.json());
+
 app.use(express.static(publicFolder));
+
+app.get('/hospital-data', async (req, res) => {
+  let data = await getHospitalData();
+  res.send(data);
+});
 
 app.get("/data.json", async (req, res) => {
   let data = await getBatchGeoData();
