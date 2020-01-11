@@ -23,3 +23,15 @@ html {
   margin-bottom: 3px;
   border-radius: 3px;
 }
+
+.need-servicios-de-salud {
+  background-color: #48bb78;
+}
+
+.need-alimento-y-o-suministros {
+  background-color: #4299e1;
+}
+
+.need-refugio---campamento {
+  background-color: #ed8936;
+}
