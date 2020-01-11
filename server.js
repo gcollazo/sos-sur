@@ -1,6 +1,27 @@
 const { promisify } = require("util");
 const fetch = require("node-fetch");
 const parser = promisify(require("xml2js").parseString);
+const express = require("express");
+const app = express();
+
+let CACHE = {};
+
+function setCacheData(data) {
+  CACHE.data = data;
+  CACHE.timestamp = Date.now();
+}
+
+function getCacheData() {
+  let now = Date.now();
+  let timeout = 10000 * 60 * 5; // 5 minutes
+  if (CACHE.timestamp && now - CACHE.timestamp <= timeout) {
+    console.log(">>> Cache Hit");
+    return CACHE.data;
+  }
+
+  console.log(">>> Cache Miss");
+  return null;
+}
 
 const PLACE_STYLE = {
   "#0": "Servicios de Salud",
@@ -9,6 +30,11 @@ const PLACE_STYLE = {
 };
 
 async function getBatchGeoData() {
+  let cacheHit = getCacheData();
+  if (cacheHit) {
+    return cacheHit;
+  }
+
   let response = await fetch(
     "https://batchgeo.com/map/kml/de8ab2455315ad6fa4b05522d88c3ed6"
   );
@@ -33,12 +59,15 @@ async function getBatchGeoData() {
     };
   });
 
+  setCacheData(cleanData);
   return cleanData;
 }
 
-async function main() {
+app.get("/data.json", async (req, res) => {
   let data = await getBatchGeoData();
-  console.log(data);
-}
+  res.json(data);
+});
 
-main();
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Listening on port 3000...");
+});
