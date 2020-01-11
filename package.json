@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "prestart": "cd client && yarn install && yarn build --environment=production",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "git push heroku master"
   },
   "dependencies": {
     "cors": "^2.8.5",
