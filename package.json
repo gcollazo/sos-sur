@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "heroku-postbuild": "cd client && yarn install && yarn run build --environment=production",
     "start": "node server.js",
     "deploy": "git push heroku master"
   },
