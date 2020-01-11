@@ -49,11 +49,19 @@ async function getBatchGeoData() {
   let places = document.Placemark;
 
   let cleanData = places.map((place) => {
+    let coords = "";
+    if (place.Point[0].coordinates) {
+      coords = place.Point[0].coordinates[0]
+        .split(",")
+        .reverse()
+        .slice(1)
+        .join(",");
+    }
     return {
       need: PLACE_STYLE[place.styleUrl],
       address: place.address[0],
       name: place.name[0],
-      location: place.Point[0].coordinates,
+      location: coords,
       data: place.ExtendedData[0].Data.filter(
         (d) => ["Necesidades", "Contactos"].indexOf(d.$.name) > -1
       ).map((d) => {
