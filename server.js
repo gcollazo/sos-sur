@@ -2,6 +2,7 @@ const { promisify } = require("util");
 const fetch = require("node-fetch");
 const parser = promisify(require("xml2js").parseString);
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 let CACHE = {};
@@ -62,6 +63,8 @@ async function getBatchGeoData() {
   setCacheData(cleanData);
   return cleanData;
 }
+
+app.use(cors());
 
 app.get("/data.json", async (req, res) => {
   let data = await getBatchGeoData();
