@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "prestart": "cd client && yarn install && yarn build --environment=production",
     "start": "node server.js"
   },
   "dependencies": {

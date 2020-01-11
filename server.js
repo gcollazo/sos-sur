@@ -3,8 +3,10 @@ const fetch = require("node-fetch");
 const parser = promisify(require("xml2js").parseString);
 const express = require("express");
 const cors = require("cors");
-const app = express();
+const path = require("path");
 
+const app = express();
+const publicFolder = path.resolve(__dirname, "client", "dist");
 let CACHE = {};
 
 function setCacheData(data) {
@@ -65,6 +67,8 @@ async function getBatchGeoData() {
 }
 
 app.use(cors());
+
+app.use(express.static(publicFolder));
 
 app.get("/data.json", async (req, res) => {
   let data = await getBatchGeoData();

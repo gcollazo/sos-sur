@@ -1,0 +1,14 @@
+@import url("normalize.css");
+
+html {
+  font-family: sans-serif;
+  font-size: 18px;
+}
+
+.container {
+  margin: 20px;
+}
+
+.report {
+  margin-bottom: 20px;
+}
