@@ -104,10 +104,9 @@ async function getDbData(Reports) {
 }
 
 async function main() {
-  let client = await MongoClient.connect(MONGODB_URI, {
+  let db = await MongoClient.connect(MONGODB_URI, {
     useUnifiedTopology: true
   });
-  let db = client.db("sos-sur");
   let Reports = db.collection("Reports");
 
   app.use(cors());
