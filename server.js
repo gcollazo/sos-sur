@@ -145,23 +145,23 @@ async function main() {
     try {
       cleanData = await schema.validateAsync(data);
     } catch (error) {
-      console.error("Invalid request body", error);
+      console.error("-> Invalid request body", error);
       res.status(400).json({ success: false, error });
       return;
     }
 
     try {
       let result = await Reports.insertOne(cleanData);
-      console.log("Report created", cleanData);
+      console.log("-> Report created", cleanData);
       res.json({ success: true, result: result.ops[0] });
     } catch (error) {
-      console.error("Error saving to db", cleanData);
+      console.error("-> Error saving to db", cleanData);
       res.status(400).json({ success: false });
     }
   });
 
   app.listen(process.env.PORT || 3000, () => {
-    console.log("Listening on port 3000...");
+    console.log("-> Listening on port 3000...");
   });
 }
 
