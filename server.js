@@ -81,6 +81,28 @@ async function getBatchGeoData() {
   return cleanData;
 }
 
+async function getDbData(Reports) {
+  let data = await Reports.find({}).toArray();
+  let result = data.map((r) => {
+    let obj = {
+      name: r.name,
+      need: r.category,
+      address: r.address,
+      data: []
+    };
+    if (r.necesidades) {
+      obj.data.push({ key: "Necesidades", value: r.necesidades });
+    }
+
+    if (r.contactos) {
+      obj.data.push({ key: "Contactos", value: r.contactos });
+    }
+    return obj;
+  });
+
+  return result;
+}
+
 async function main() {
   let client = await MongoClient.connect(MONGODB_URI, {
     useUnifiedTopology: true
@@ -94,8 +116,10 @@ async function main() {
   app.use(express.static(publicFolder));
 
   app.get("/data.json", async (req, res) => {
-    let data = await getBatchGeoData();
-    res.json(data);
+    let dbData = await getDbData(Reports);
+    let apiData = await getBatchGeoData();
+    let result = dbData.concat(apiData);
+    res.json(result);
   });
 
   app.post("/api/reports", async (req, res) => {

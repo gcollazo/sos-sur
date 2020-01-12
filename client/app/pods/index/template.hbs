@@ -9,9 +9,12 @@
       <div class="need need-{{slugify report.need}}">{{report.need}}</div>
       <div>{{report.name}}</div>
       <div>{{report.address}}</div>
-      <div>
-        <a target="_blank" href="https://www.google.com/maps/place/{{report.location}}">Ver en mapa</a>
-      </div>
+      {{#if report.location}}
+        <div>
+          <a target="_blank" href="https://www.google.com/maps/place/{{report.location}}">Ver en mapa</a>
+        </div>
+      {{/if}}
+
       {{#each report.data as |meta|}}
         <div>{{meta.key}}: {{meta.value}}</div>
       {{/each}}
