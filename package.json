@@ -9,8 +9,13 @@
     "deploy": "git push heroku master"
   },
   "dependencies": {
+    "@hapi/joi": "^17.0.2",
+    "body-parser": "^1.19.0",
+    "const": "^1.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongodb": "^3.4.1",
     "node-fetch": "^2.6.0",
     "xml2js": "^0.4.23"
   }

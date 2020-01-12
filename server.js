@@ -1,13 +1,20 @@
+require("dotenv").config();
+
+const { MongoClient } = require("mongodb");
 const { promisify } = require("util");
-const fetch = require("node-fetch");
-const parser = promisify(require("xml2js").parseString);
-const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const express = require("express");
+const fetch = require("node-fetch");
+const Joi = require("@hapi/joi");
+const parser = promisify(require("xml2js").parseString);
 const path = require("path");
 
-const app = express();
 const publicFolder = path.resolve(__dirname, "public");
+const MONGODB_URI = process.env.MONGODB_URI;
 let CACHE = {};
+
+const app = express();
 
 function setCacheData(data) {
   CACHE.data = data;
@@ -74,15 +81,64 @@ async function getBatchGeoData() {
   return cleanData;
 }
 
-app.use(cors());
+async function main() {
+  let client = await MongoClient.connect(MONGODB_URI, {
+    useUnifiedTopology: true
+  });
+  let db = client.db("sos-sur");
+  let Reports = db.collection("Reports");
 
-app.use(express.static(publicFolder));
+  app.use(cors());
+  app.use(bodyParser.json());
 
-app.get("/data.json", async (req, res) => {
-  let data = await getBatchGeoData();
-  res.json(data);
-});
+  app.use(express.static(publicFolder));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Listening on port 3000...");
-});
+  app.get("/data.json", async (req, res) => {
+    let data = await getBatchGeoData();
+    res.json(data);
+  });
+
+  app.post("/api/reports", async (req, res) => {
+    let data = req.body;
+
+    // Define body schema
+    const schema = Joi.object({
+      name: Joi.string()
+        .max(255)
+        .required(),
+      category: Joi.string()
+        .max(255)
+        .required(),
+      address: Joi.string()
+        .max(255)
+        .required(),
+      necesidades: Joi.string().max(255),
+      contactos: Joi.string().max(255)
+    });
+
+    let cleanData = null;
+
+    try {
+      cleanData = await schema.validateAsync(data);
+    } catch (error) {
+      console.error("Invalid request body", error);
+      res.status(400).json({ success: false, error });
+      return;
+    }
+
+    try {
+      let result = await Reports.insertOne(cleanData);
+      console.log("Report created", cleanData);
+      res.json({ success: true, result: result.ops[0] });
+    } catch (error) {
+      console.error("Error saving to db", cleanData);
+      res.status(400).json({ success: false });
+    }
+  });
+
+  app.listen(process.env.PORT || 3000, () => {
+    console.log("Listening on port 3000...");
+  });
+}
+
+main();

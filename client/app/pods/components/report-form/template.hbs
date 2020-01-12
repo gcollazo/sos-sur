@@ -1,0 +1,35 @@
+  {{#if isEditing}}
+    <div class="form-wrapper">
+      <h3>Añadir lugar</h3>
+      <form onsubmit={{action "submitForm"}}>
+        <label for="nombre">
+          <div>Nombre del lugar</div>
+          {{input type="text" value=this.name id="nombre"}}
+        </label>
+        <label for="need">
+          <div>Categoría</div>
+          <PowerSelect @options={{this.categories}} @onChange={{action (mut selectedCategory)}} @selected={{this.selectedCategory}} as |name|>
+            {{name}}
+          </PowerSelect>
+        </label>
+        <label for="direccion">
+          <div>Dirección</div>
+          {{textarea type="text" value=this.address id="direccion"}}
+        </label>
+        <label for="necesidades">
+          <div>Necesidades</div>
+          {{textarea type="text" value=this.necesidades id="necesidades"}}
+        </label>
+        <label for="contactos">
+          <div>Contactos</div>
+          {{textarea type="text" value=this.contactos id="contactos"}}
+        </label>
+        <p>
+          <button type="submit">Guardar</button>
+          <a href="#" onClick={{action "toggleEdit"}} class="cancel">Cancelar</a>
+        </p>
+      </form>
+    </div>
+  {{else}}
+    <p><button class="button" onClick={{action "toggleEdit"}}>Añadir Lugar</button></p>
+  {{/if}}

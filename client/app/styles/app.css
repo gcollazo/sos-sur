@@ -1,5 +1,11 @@
 @import url("normalize.css");
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   font-family: sans-serif;
   font-size: 18px;
@@ -32,6 +38,37 @@ html {
   background-color: #4299e1;
 }
 
+.need-centro-de-acopio {
+  background-color: #ed64a6;
+}
+
 .need-refugio---campamento {
   background-color: #ed8936;
+}
+
+button {
+  padding: 5px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 5px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.cancel {
+  color: red;
+}
+
+.form-wrapper {
+  background-color: lightyellow;
+  border: 1px solid rgb(228, 186, 1);
+  padding: 5px 20px;
+  margin-bottom: 20px;
 }

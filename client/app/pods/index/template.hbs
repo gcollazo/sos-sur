@@ -1,10 +1,17 @@
 <div class="container">
   <h1>sos-sur</h1>
+  <p>Abajo un listado de lugares con sus necesidades.</p>
+
+  <ReportForm />
+
   {{#each model as |report|}}
     <section class="report">
       <div class="need need-{{slugify report.need}}">{{report.need}}</div>
       <div>{{report.name}}</div>
-      <div><a target="_blank" href="https://www.google.com/maps/place/{{report.location}}">{{report.address}}</a></div>
+      <div>{{report.address}}</div>
+      <div>
+        <a target="_blank" href="https://www.google.com/maps/place/{{report.location}}">Ver en mapa</a>
+      </div>
       {{#each report.data as |meta|}}
         <div>{{meta.key}}: {{meta.value}}</div>
       {{/each}}
