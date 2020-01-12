@@ -8,6 +8,9 @@
     "client-build": "cd client && yarn install && yarn run build --environment=production && rm -rf ../public && mv dist ../public",
     "deploy": "git push heroku master"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
     "@hapi/joi": "^17.0.2",
     "body-parser": "^1.19.0",
