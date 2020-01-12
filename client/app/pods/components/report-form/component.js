@@ -8,7 +8,8 @@ export default class ReportForm extends Component {
     "Servicios de salud",
     "Alimento y/o suministros",
     "Refugio / Campamento",
-    "Centro de acopio"
+    "Centro de acopio",
+    "Hospital"
   ];
 
   @tracked isEditing;
